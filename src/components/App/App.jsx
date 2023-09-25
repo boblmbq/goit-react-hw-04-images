@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Searchbar from '../Searchbar';
 import Button from '../Button';
 import ImageGallery from '../ImageGallery';

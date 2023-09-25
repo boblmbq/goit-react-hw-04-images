@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import {  useEffect } from 'react';
 import { Overlay, ImgWrapper } from './Modal.styled';
 import { createPortal } from 'react-dom';
 const rootModal = document.querySelector('#modal');
