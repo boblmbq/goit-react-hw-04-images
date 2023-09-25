@@ -21,24 +21,23 @@ export const App = () => {
     setLoadMore(false);
   };
 
-  const gettingImgs = useCallback(async () => {
-    setLoading(true);
-    try {
-      const gettedImgs = await getImages(queryInput, page);
-      const { hits, totalHits } = gettedImgs;
-      setItems(prev => [...prev, ...hits]);
-      setLoadMore(page < Math.ceil(totalHits / MAX_PER_PAGE));
-      return;
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }, [queryInput, page]);
-
   useEffect(() => {
+    async function gettingImgs() {
+      setLoading(true);
+      try {
+        const gettedImgs = await getImages(queryInput, page);
+        const { hits, totalHits } = gettedImgs;
+        setItems(prev => [...prev, ...hits]);
+        setLoadMore(page < Math.ceil(totalHits / MAX_PER_PAGE));
+        return;
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
     queryInput && gettingImgs();
-  }, [gettingImgs, queryInput]);
+  }, [queryInput, page]);
 
   if (error) return <h2>{error}</h2>;
 

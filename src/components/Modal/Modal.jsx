@@ -4,24 +4,24 @@ import { createPortal } from 'react-dom';
 const rootModal = document.querySelector('#modal');
 
 const Modal = ({ img, alt, onLeave }) => {
-  const closeModal = useCallback(
-    e => {
-      if (e.code === 'Escape' || e.currentTarget === e.target) {
-        onLeave();
-      }
-    },
-    [onLeave]
-  );
+ 
 
   useEffect(() => {
-    window.addEventListener('keyup', closeModal);
+    function ifEscape(e) {
+      if (e.code === 'Escape') onLeave();
+    }
+    window.addEventListener('keyup', ifEscape);
     return () => {
-      window.removeEventListener('keyup', closeModal);
+      window.removeEventListener('keyup', ifEscape);
     };
-  }, [closeModal]);
+  }, [onLeave]);
+
+   function ifOverlayClick(e) {
+     if (e.currentTarget === e.target) onLeave();
+   }
 
   return createPortal(
-    <Overlay onClick={closeModal} className="overlay">
+    <Overlay onClick={ifOverlayClick} className="overlay">
       <ImgWrapper className="modal">
         <img src={img} alt={alt} />
       </ImgWrapper>
